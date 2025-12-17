@@ -2,7 +2,9 @@ package com.netops.api; // (Confirme se o pacote é esse mesmo do seu projeto)
 
 import com.netops.api.model.Equipamento;
 import com.netops.api.model.StatusEquipamento;
+import com.netops.api.model.Tecnico;
 import com.netops.api.repository.EquipamentoRepository;
+import com.netops.api.repository.TecnicoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,9 +21,15 @@ public class NetopsApplication {
 
     // Esse feijãozinho (Bean) roda assim que o app inicia
     @Bean
-    CommandLineRunner initDatabase(EquipamentoRepository repository) {
+    CommandLineRunner initDatabase(EquipamentoRepository equipRepo, TecnicoRepository tecRepo) {
         return args -> {
-            // Cria um equipamento fake pra testar
+            // Cria o Técnico
+            Tecnico t1 = new Tecnico();
+            t1.setNome("Jubileu da Silva");
+            t1.setTelefone("1199999-9999");
+            tecRepo.save(t1);
+
+            // Cria o Equipamento (MikroTik)
             Equipamento mk = new Equipamento();
             mk.setMarca("MikroTik");
             mk.setModelo("CCR1009");
@@ -29,22 +37,7 @@ public class NetopsApplication {
             mk.setStatus(StatusEquipamento.DISPONIVEL);
             mk.setDataAquisicao(LocalDate.now());
             mk.setNumeroSerie("SN123456");
-
-            repository.save(mk); // Salva no banco H2
-
-            Equipamento onu = new Equipamento();
-            onu.setMarca("Huawei");
-            onu.setModelo("HG8145V5");
-            onu.setMacAddress("AA:BB:CC:DD:EE:FF");
-            onu.setStatus(StatusEquipamento.EM_USO);
-            onu.setDataAquisicao(LocalDate.now().minusDays(30));
-            onu.setNumeroSerie("HUAWEI123");
-
-            repository.save(onu);
-
-            System.out.println("---------------------------------");
-            System.out.println("✅ BANCO DE DADOS POPULADO COM SUCESSO!");
-            System.out.println("---------------------------------");
+            equipRepo.save(mk);
         };
     }
 }

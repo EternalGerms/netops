@@ -1,5 +1,6 @@
 package com.netops.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -13,6 +14,7 @@ public class Equipamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "equipID")
     private Long id;
 
     @NotBlank(message = "A marca não pode estar em branco")
@@ -32,4 +34,9 @@ public class Equipamento {
 
     @Enumerated(EnumType.STRING)
     private StatusEquipamento status; // NOVO, EM_USO, DEFEITO
+
+    @ManyToOne
+    @JoinColumn(name = "tecnicoID", referencedColumnName = "tecID")
+    @JsonIgnore
+    private Tecnico tecnico;
 }
