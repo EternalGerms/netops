@@ -1,5 +1,8 @@
 package com.netops.api.controller;
 
+import com.netops.api.dto.EquipamentoMapper;
+import com.netops.api.dto.EquipamentoRequestDTO;
+import com.netops.api.dto.EquipamentoResponseDTO;
 import com.netops.api.model.Equipamento;
 import com.netops.api.model.StatusEquipamento;
 import com.netops.api.service.EquipamentoService;
@@ -18,14 +21,19 @@ public class EquipamentoController {
     private EquipamentoService service;
 
     @GetMapping
-    public List<Equipamento> listar() {
-        return service.listarTudo();
+    public List<EquipamentoResponseDTO> listar() {
+        return service.listarTudo().stream()
+                .map(EquipamentoMapper::toDTO)
+                .toList();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Equipamento criar(@RequestBody @Valid Equipamento equipamento) {
-        return service.salvar(equipamento);
+    public EquipamentoResponseDTO criar(@RequestBody @Valid EquipamentoRequestDTO dto) {
+
+        Equipamento equipamento = EquipamentoMapper.toEntity(dto);
+        Equipamento salvo = service.salvar(equipamento);
+        return EquipamentoMapper.toDTO(salvo);
     }
 
     @DeleteMapping("/{id}")

@@ -2,7 +2,6 @@ package com.netops.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,15 +16,10 @@ public class Equipamento {
     @Column(name = "equipID")
     private Long id;
 
-    @NotBlank(message = "A marca não pode estar em branco")
-    @Column(nullable = false)
     private String marca;
 
-    @NotBlank(message = "O modelo é obrigatório")
-    @Column(nullable = false)
     private String modelo;
 
-    @Column(unique = true, nullable = false)
     private String macAddress;
 
     private String numeroSerie;
