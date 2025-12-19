@@ -1,11 +1,15 @@
 package com.netops.api.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "tecnicos")
 public class Tecnico {
@@ -18,7 +22,7 @@ public class Tecnico {
 
     private String telefone;
 
-    @OneToMany(mappedBy = "tecnico")
+    @OneToMany(mappedBy = "tecnico", fetch = FetchType.LAZY)
     private List<Equipamento> equipamentos;
 
 }

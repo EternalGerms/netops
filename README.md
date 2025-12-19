@@ -19,7 +19,7 @@ docker run --name netops-db \
   -e POSTGRES_USER=admin \
   -e POSTGRES_PASSWORD=admin \
   -e POSTGRES_DB=netops_db \
-  -p 5432:5432 \
+  -p 5433:5433 \
   -d postgres:15-alpine
 ```
 

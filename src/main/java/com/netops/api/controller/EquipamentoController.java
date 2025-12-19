@@ -7,7 +7,7 @@ import com.netops.api.model.Equipamento;
 import com.netops.api.model.StatusEquipamento;
 import com.netops.api.service.EquipamentoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/equipamentos")
+@RequiredArgsConstructor
 public class EquipamentoController {
 
-    @Autowired
-    private EquipamentoService service;
+    private final EquipamentoService service;
 
     @GetMapping
     public List<EquipamentoResponseDTO> listar() {
